@@ -121,7 +121,7 @@ def main():
                 
             ## You can add your code or functions here
         elif choice==4:
-            print ("Menu 4 has been selected")
+            #print ("Menu 4 has been selected")
             airgateway(tn)
             ## You can add your code or functions here
         elif choice==5:

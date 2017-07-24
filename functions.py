@@ -517,11 +517,14 @@ def print_airgw_label(ssid,wpa):
     
     
 def create_airgateway_config():
+    os.system("ping -c 1 192.168.1.1")
     macaddress=subprocess.check_output("arp -a | grep 192.168.1.1 | awk '{print $4}' | head -1", shell=True)
 
     while "<incomplete>" in macaddress:
-        sleep(10)
+        time.sleep(10)
+        os.system("ping -c 1 192.168.1.1")
         macaddress=subprocess.check_output("arp -a | grep 192.168.1.1 | awk '{print $4}' | head -1", shell=True)
+
         print "Waiting for mac-address"
 
     ssid="Telemixnett " + macaddress[9:17]
