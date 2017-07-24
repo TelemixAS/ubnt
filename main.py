@@ -99,11 +99,11 @@ def main():
             
             confirm = False
             config_choice = raw_input("What config/site do you want on these devices? (all devices will get this config) :")
-            while confirm = False:
+            while confirm == False:
                 yn=raw_input("Is this correct? " + config_choice +" Y/n")
                 while yn.lower() not in "y,n":
                     yn=raw_input("Press y or n")
-                if yn.lower() = "y":
+                if yn.lower() == "y":
                     confirm = True
                 else:
                     print("Try again")
