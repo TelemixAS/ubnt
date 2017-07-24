@@ -1,0 +1,7 @@
+
+
+-Printing from usb to BROTHER PTouch PTE550WVP
+
+-Buzzer sound from script through gpio
+
+-Terminal GUI

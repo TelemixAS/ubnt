@@ -1,0 +1,45 @@
+
+Different modes
+> = user-mode
+# = admin-mode
+(Config)# = config-mode
+(Interface x/x)# = port config-mode
+
+By default the switch has enabled telnet on port 23
+Username: ubnt
+Password: ubnt
+
+A factory-reset switch has the default ip of 192.168.1.2/24
+
+
+These are commands that are relevant for now
+
+// This will show the model of the unit, what serial number, what MAC address and what software version it currently has
+#show hardware
+
+// To enable admin-mode
+>enable
+
+// To enable config-mode
+#configure
+
+// To enter port config-mode on port 1 (module 0)
+(Config)#interface 0/1
+
+// Change the untagged VLAN on port 1 to VLAN 55
+(Interface 0/1)#vlan pvid 55
+
+// Change POE mode on port 1 to 24v passive (needed on most ubnt devices we use)
+(Interface 0/1)#poe opmode passive24v
+
+// Copy and update firmware from a IP
+#copy tftp://192.168.1.99/ES-eswh.v1.7.0.4922887.stk backup backup
+y
+#boot system backup
+#write memory
+y
+#reload
+y
+
+// To exit current mode and go down one level
+exit
