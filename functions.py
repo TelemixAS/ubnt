@@ -458,17 +458,20 @@ def airgateway(tn):
             #print "Not implemented yet"
         elif choice==2:
             bridgeMode = False
-            #loop = False
-            print "Not implemented yet"
+            loop = False
+            #print "Not implemented yet"
         else:
             print "Wrong input, try again!"
             
     # If bridge, what bandwidth?
     if bridgeMode:
-        # Open port then copy config g2
+        # How much speed for this bridge gateway?
+        change_bandwidth()
+        
+        # Open port then copy config
         for port in range(portStart,portStop+1):
             open_port(tn,port)
-            move_file_ssh('192.168.1.1','config/g2')
+            move_file_ssh('192.168.1.1','agtemp.cfg')
             apply_config('192.168.1.1')
             close_port(tn,port)
     else:
@@ -485,6 +488,23 @@ def airgateway(tn):
     
     # Move config and apply
 
+def change_bandwith():
+    
+    speed_down = raw_input("How much speed down? in kbps  (10000kbps = 10Mbps)")
+    speed_up = raw_input("How much speed up? in kbps  (10000kbps = 10Mbps)")
+    
+    
+    
+    with open('config/g2', 'r') as gwfile:
+        gwfiledata = gwfile.read()
+
+    gwfiledata = gwfiledata.replace('input.rate=changeme','input.rate=' + speed_down)
+    gwfiledata = gwfiledata.replace('output.rate=changeme','output.rate=' + speed_up)
+
+    with open('agtemp.cfg', 'w') as gwfile:
+        gwfile.write(gwfiledata)
+    
+    
 def save_information(ssid,wpa,name,macaddress,ip):
     print ("later")
     
@@ -535,7 +555,7 @@ def create_wpa_link():
     return wpa
 
 
-def ptmp_menu():       ## Your menu design here
+def ptmp_menu(tn):       ## Your menu design here
     print 30 * "-" , "MENU" , 30 * "-"
     print "1. Sektor"
     print "2. Sektor"

@@ -23,7 +23,7 @@ def print_menu():       ## Your menu design here
     print (30 * "-" , "MENU" , 30 * "-")
     print ("1. PTP Link")
     print ("2. Just upgrade")
-    print ("3. Make sound")
+    print ("3. PTMP")
     print ("4. Airgateway config")
     print ("5. Exit")
     print (67 * "-")
@@ -86,8 +86,39 @@ def main():
             buzzer()
             ## You can add your code or functions here
         elif choice==3:
-            print ("Menu 3 has been selected")
-            buzzer()
+            print ("Menu 3 has been selected, this will only create the config for antennas, not Gateways. Use nr 4 for that!")
+            lines = []
+            portStart = int(input("The port to start with: "))
+            portStop = int(input("The port to stop after: "))
+            
+            with open("config/.gitignore") as file:
+                for line in file:
+                    line in line.strip()
+                    lines.append(line)
+            
+            
+            confirm = False
+            config_choice = raw_input("What config/site do you want on these devices? (all devices will get this config) :")
+            while confirm = False:
+                yn=raw_input("Is this correct? " + config_choice +" Y/n")
+                while yn.lower() not in "y,n":
+                    yn=raw_input("Press y or n")
+                if yn.lower() = "y":
+                    confirm = True
+                else:
+                    print("Try again")
+                    config_choice = raw_input("What config/site do you want on these devices? (all devices will get this config) :")
+            
+            
+            config_path = "config/" + config_choice
+            
+            just_upgrade(tn,portStart,portStop)
+            for port in range(portStart,portStop+1):
+                open_port(tn,port)
+                move_file_ssh('192.168.1.20',config_path)
+                apply_config('192.168.1.20')
+                close_port(tn,port)
+                
             ## You can add your code or functions here
         elif choice==4:
             print ("Menu 4 has been selected")
