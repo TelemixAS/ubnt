@@ -8,7 +8,7 @@ import os
 import re
 import hashlib
 import RPi.GPIO as GPIO
-import socket
+import subprocess
 
 # Current new used firmware versions
 versionXW = "6.0.3"
@@ -483,10 +483,6 @@ def airgateway(tn):
             apply_config('192.168.1.1')
             close_port(tn,port)
         
-    
-    # If fritidsnett, print labels
-    
-    # Move config and apply
 
 def change_bandwith():
     
@@ -522,6 +518,12 @@ def print_airgw_label(ssid,wpa):
     
 def create_airgateway_config():
     macaddress=subprocess.check_output("arp -a | grep 192.168.1.1 | awk '{print $4}' | head -1", shell=True)
+
+    while "<incomplete>" in macaddress:
+        sleep(10)
+        macaddress=subprocess.check_output("arp -a | grep 192.168.1.1 | awk '{print $4}' | head -1", shell=True)
+        print "Waiting for mac-address"
+
     ssid="Telemixnett " + macaddress[9:17]
     wpa=create_wpa_airgw()
     
