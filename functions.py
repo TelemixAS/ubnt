@@ -325,6 +325,23 @@ def get_ptmp_info():
     print ("")
 
 
+def change_bandwith():
+    
+    speed_down = raw_input("How much speed down? in kbps  (10000kbps = 10Mbps)")
+    speed_up = raw_input("How much speed up? in kbps  (10000kbps = 10Mbps)")
+    
+    
+    
+    with open('config/g2', 'r') as gwfile:
+        gwfiledata = gwfile.read()
+
+    gwfiledata = gwfiledata.replace('input.rate=changeme','input.rate=' + speed_down)
+    gwfiledata = gwfiledata.replace('output.rate=changeme','output.rate=' + speed_up)
+
+    with open('agtemp.cfg', 'w') as gwfile:
+        gwfile.write(gwfiledata)
+    
+    
 def get_ptp_info():
     ptpName = raw_input("Enter descriptive name of this link:")
     ptpNameAP = ptpName + " AP"
@@ -436,7 +453,7 @@ reboot
 
 def airgateway(tn):
     # Function to handle airgateway upgrade, config creation and apply config
-    print ("nothing yet") 
+    #print ("nothing yet") 
     # What ports?
     portStart = int(input("The port to start with: "))
     portStop = int(input("The port to stop after: "))
@@ -484,22 +501,7 @@ def airgateway(tn):
             close_port(tn,port)
         
 
-def change_bandwith():
-    
-    speed_down = raw_input("How much speed down? in kbps  (10000kbps = 10Mbps)")
-    speed_up = raw_input("How much speed up? in kbps  (10000kbps = 10Mbps)")
-    
-    
-    
-    with open('config/g2', 'r') as gwfile:
-        gwfiledata = gwfile.read()
 
-    gwfiledata = gwfiledata.replace('input.rate=changeme','input.rate=' + speed_down)
-    gwfiledata = gwfiledata.replace('output.rate=changeme','output.rate=' + speed_up)
-
-    with open('agtemp.cfg', 'w') as gwfile:
-        gwfile.write(gwfiledata)
-    
     
 def save_information(ssid,wpa,name,macaddress,ip):
     print ("later")
