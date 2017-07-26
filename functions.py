@@ -325,7 +325,7 @@ def get_ptmp_info():
     print ("")
 
 
-def change_bandwith():
+def change_bandwidth():
     
     speed_down = raw_input("How much speed down? in kbps  (10000kbps = 10Mbps)")
     speed_up = raw_input("How much speed up? in kbps  (10000kbps = 10Mbps)")
