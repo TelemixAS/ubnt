@@ -119,10 +119,12 @@ def main():
                 apply_config('192.168.1.20')
                 close_port(tn,port)
                 
+            buzzer()
             ## You can add your code or functions here
         elif choice==4:
             #print ("Menu 4 has been selected")
             airgateway(tn)
+            buzzer()
             ## You can add your code or functions here
         elif choice==5:
             print ("Menu 5 has been selected")

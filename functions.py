@@ -513,6 +513,7 @@ def print_airgw_label(ssid,wpa):
 
     data = ssid + " | " + wpa
     client_socket.send(data)
+    client_socket.send(data)
     client_socket.close()
     
     
