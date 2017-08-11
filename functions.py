@@ -16,7 +16,7 @@ versionXM = "6.0.3"
 versionTI = "6.0.3"
 versionWA = "8.3"
 versionXC = "8.3"
-swVersion = "1.7.0.4922887"
+swVersion = "1.7.1.4993748"
 airgatewayfw = "AirGW.v1.1.9"
 
 # Path to firmware
@@ -26,8 +26,8 @@ XWFirmware = ""
 XMFirware = ""
 TIFirmware = ""
 XCFirmware = ""
-ESFirmware = ""
-ES10GFirmware = ""
+ESFirmware = "ES-eswh.v1.7.1.4993748.stk"
+ES10GFirmware = "ES-esgh.v1.7.1.4993748.stk"
 
 
 socket.setdefaulttimeout(0.5)
@@ -274,7 +274,7 @@ def switch_upgrade(ip):
     if swVersion in version:
         print ("Correct firmware version\n\n")
     else:
-        swHost.write('copy tftp://192.168.1.87/ES-eswh.v1.7.0.4922887.stk backup\n')
+        swHost.write('copy tftp://192.168.1.87/ES-eswh.v1.7.1.4993748.stk backup\n')
         swHost.read_until('(y/n)')
         swHost.write('y')
 
