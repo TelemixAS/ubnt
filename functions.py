@@ -14,18 +14,18 @@ import subprocess
 versionXW = "6.0.3"
 versionXM = "6.0.3"
 versionTI = "6.0.3"
-versionWA = "8.3"
-versionXC = "8.3"
+versionWA = "8.3.2"
+versionXC = "8.3.2"
 swVersion = "1.7.1.4993748"
 airgatewayfw = "AirGW.v1.1.9"
 
 # Path to firmware
-WAFirmware = "firmware/WA.v8.3.34573.170614.1646.bin"
+WAFirmware = "firmware/WA.v8.3.2.35333.170901.1549.bin"
 AirGWFirmware = "firmware/AirGW.v1.1.9.30597.170329.1800.bin"
 XWFirmware = ""
 XMFirware = ""
 TIFirmware = ""
-XCFirmware = ""
+XCFirmware = "firmware/XC.v8.3.2.35333.170901.1549.bin"
 ESFirmware = "ES-eswh.v1.7.1.4993748.stk"
 ES10GFirmware = "ES-esgh.v1.7.1.4993748.stk"
 
@@ -141,7 +141,7 @@ def checkandupgrade(client,transferclient,tempvar):
             return False
         else:
             print "transferring new firmware\n"
-            transferclient.put('/srv/tftp/XCfirmware.bin', '/tmp/fwupdate.bin')
+            transferclient.put(XCFirmware, '/tmp/fwupdate.bin')
 
     elif "WA" in tempvar:
         if versionWA in tempvar:
@@ -513,27 +513,30 @@ def print_airgw_label(ssid,wpa):
     client_socket.connect((printserver, printport))
     #print('Connecting ...')
 
-    data = ssid + " | " + wpa
+    data = ssid + " | " + wpa + "\n"
     client_socket.send(data)
+    time.sleep(10)
     client_socket.send(data)
     client_socket.close()
     
     
 def create_airgateway_config():
     os.system("ping -c 1 192.168.1.1")
-    macaddress=subprocess.check_output("arp -a | grep 192.168.1.1 | awk '{print $4}' | head -1", shell=True)
+    macaddress=subprocess.check_output("arp -a | grep '(192.168.1.1)' | awk '{print $4}' | head -1", shell=True)
 
     while "<incomplete>" in macaddress:
         time.sleep(10)
         os.system("ping -c 1 192.168.1.1")
-        macaddress=subprocess.check_output("arp -a | grep 192.168.1.1 | awk '{print $4}' | head -1", shell=True)
+        macaddress=subprocess.check_output("arp -a | grep '(192.168.1.1)' | awk '{print $4}' | head -1", shell=True)
 
         print "Waiting for mac-address"
 
+    #ssid="Storjordnett " + macaddress[9:17]
     ssid="Telemixnett " + macaddress[9:17]
     wpa=create_wpa_airgw()
     
     with open('config/g', 'r') as gwfile:
+    #with open('config/site2/a', 'r') as gwfile:
         gwfiledata = gwfile.read()
 
     gwfiledata = gwfiledata.replace('ssid=changeme','ssid=' + ssid)
